@@ -50,13 +50,15 @@ class LCDLinearScroll:
 	def cycle_colours(self):
 		c_iter = cycle(self.colours.iterkeys())
 		def repeat():
-			print("repeat() being called")
 			self.change_colour(next(c_iter))
-			self.timer = Timer(2, repeat)
+			self.timer = Timer(0.5, repeat)
 			self.timer.start()
 
-		self.timer = Timer(2, repeat)
+		self.timer = Timer(0.5, repeat)
 		self.timer.start()
+	
+	def stop_cycle(self):
+		self.timer.cancel()
 
 	def setup_scroll_events(self):
 		"""Sets up the scroll events such that left is cycles backwards
