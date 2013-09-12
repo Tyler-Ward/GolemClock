@@ -1,0 +1,38 @@
+# Create your views here.
+from django.shortcuts import render_to_response
+from django.http import HttpResponseBadRequest, HttpResponseForbidden, HttpResponse, HttpResponseRedirect
+from django.template import RequestContext
+from django.contrib import auth
+from django.contrib.auth.decorators import login_required
+
+def index_view(request):
+	return render_to_response("index.html")
+
+def login_view(request):
+	context = RequestContext(request)
+	if request.method == "GET":
+		return render_to_response("login.html",context_instance=context)
+	else:
+		try:
+			username = request.POST['login-username']
+			password = request.POST['login-password']
+		except KeyError:
+			return HttpResponseBadRequest("Need to include all required parameters: login-username, login-password")
+		user = auth.authenticate(username=username,password=password)
+		if user is not None:
+			if user.is_active:
+				auth.login(request,user)
+				return HttpResponseRedirect("/main")
+			else:
+				return HttpResponseForbidden("Your user is inactive")
+		else:
+			return HttpResponseForbidden("Incorrect username or password")
+
+@login_required
+def main_view(request):
+	return render_to_response("main.html")
+	
+@login_required
+def logout_view(request):
+	auth.logout(request)
+	return HttpResponseRedirect("/")
