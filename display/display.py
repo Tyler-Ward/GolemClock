@@ -12,7 +12,7 @@ class LCDLinearScroll:
 		self.items = items 	
 		self.index = 0
 
-	def display_message(msg):
+	def display_message(self, msg):
 		"Displays an arbitrary message regardless of items"
 		self.display.clear()
 		self.display.message(msg)
