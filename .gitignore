@@ -1,3 +1,5 @@
+webface/golem.db
+
 *.py[cod]
 
 # C extensions
