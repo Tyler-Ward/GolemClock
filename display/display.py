@@ -12,6 +12,7 @@ class LCDLinearScroll:
 	def __init__(self, items, display=Adafruit_CharLCDPlate()):
 		self.display = display
 		self.items = items 	
+		self.index = 0
 		self.colours = {'Red' : self.display.RED , 
 			'Yellow': self.display.YELLOW,
 			'Green' : self.display.GREEN,
@@ -19,7 +20,6 @@ class LCDLinearScroll:
 			'Blue'  : self.display.BLUE,
 			'Violet': self.display.VIOLET}
 
-	self.index = 0
 
 	def display_message(self, msg):
 		"Displays an arbitrary message regardless of items"
