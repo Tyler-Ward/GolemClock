@@ -20,4 +20,6 @@ urlpatterns = patterns('',
     url(r'^login$', golem.login_view),
     url(r'^logout$', golem.logout_view),
     url(r'^main$', golem.main_view),
+    
+    url(r'^test/display', golem.test_display_view),
 )

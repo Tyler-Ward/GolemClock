@@ -36,3 +36,18 @@ def main_view(request):
 def logout_view(request):
 	auth.logout(request)
 	return HttpResponseRedirect("/")
+	
+@login_required
+def test_display_view(request):
+	import pika as p
+	
+	connection = p.BlockingConnection(p.ConnectionParameters("localhost"))
+	channel = connection.channel()
+	
+	channel.basic_publish(exchange = "",
+												routing_key = "commands",
+												body = "displaytest")
+												
+	connection.close()
+	
+	return HttpResponse()
