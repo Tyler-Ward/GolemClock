@@ -1,4 +1,5 @@
 from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
+from time import sleep
 
 class LCDLinearScroll:
 	"""
@@ -30,27 +31,26 @@ class LCDLinearScroll:
 		self.display.clear()
 		self.display.message(self.items[self.index])
 
-
-	def setup_scoll_events(self):
+	def setup_scroll_events(self):
 		"""Sets up the scroll events such that left is cycles backwards
 		and right cycles forwards"""
 
 		buttons = {'left': self.display.LEFT, 'right': self.display.RIGHT}
 
-		prev_button = None
-
+		
 		while True:
 			if self.display.buttonPressed(buttons['left']):
-				if buttons['left'] is not prev_button:
-					self.display_prev()
-					prev_button = buttons['left']
+				while self.display.buttonPressed(buttons['left']):
+					pass
+				self.display_prev()
 
 			if self.display.buttonPressed(buttons['right']):
-				if buttons['right'] is not prev_button:
-					self.display_next()
-					prev_button = buttons['right']
+				while self.display.buttonPressed(buttons['right']):
+					pass
+				self.display_next()
 
 if __name__ == '__main__':
 	items = ('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6')
 	scroller = LCDLinearScroll(items)
+	scroller.setup_scroll_events()
 
