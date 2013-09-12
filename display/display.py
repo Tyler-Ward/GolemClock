@@ -51,6 +51,7 @@ class LCDLinearScroll:
 	def cycle_colours(self):
 		c_iter = cycle(self.colours.iterkeys())
 		def repeat():
+			print("repeat() being called")
 			self.change_colour(next(c_iter))
 			self.timer = Timer(2, repeat)
 
