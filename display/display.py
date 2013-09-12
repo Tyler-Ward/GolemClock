@@ -8,18 +8,18 @@ class LCDLinearScroll:
 	A class which enables one to display a linear list of items.
 	The list of items can be scrolled through
 	"""
-	colours = {'Red' : self.display.RED , 
+
+	def __init__(self, items, display=Adafruit_CharLCDPlate()):
+		self.display = display
+		self.items = items 	
+		self.colours = {'Red' : self.display.RED , 
 			'Yellow': self.display.YELLOW,
 			'Green' : self.display.GREEN,
 			'Teal': self.display.TEAL,
 			'Blue'  : self.display.BLUE,
 			'Violet': self.display.VIOLET}
 
-
-	def __init__(self, items, display=Adafruit_CharLCDPlate()):
-		self.display = display
-		self.items = items 	
-		self.index = 0
+	self.index = 0
 
 	def display_message(self, msg):
 		"Displays an arbitrary message regardless of items"
