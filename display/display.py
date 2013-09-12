@@ -1,4 +1,5 @@
 from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
+from time import sleep
 
 class LCDLinearScroll:
 	"""
@@ -36,12 +37,14 @@ class LCDLinearScroll:
 
 		buttons = {'left': self.display.LEFT, 'right': self.display.RIGHT}
 
+		
 		while True:
 			if self.display.buttonPressed(buttons['left']):
 				self.display_prev()
 
 			if self.display.buttonPressed(buttons['right']):
 				self.display_next()
+       		sleep(0.2)
 
 if __name__ == '__main__':
 	items = ('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6')
