@@ -1,6 +1,4 @@
 from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
-from time import sleep
-from threading import Timer
 from itertools import cycle
 
 class LCDLinearScroll:
@@ -54,6 +52,7 @@ class LCDLinearScroll:
 			print("repeat() being called")
 			self.change_colour(next(c_iter))
 			self.timer = Timer(2, repeat)
+			self.timer.start()
 
 		self.timer = Timer(2, repeat)
 		self.timer.start()
