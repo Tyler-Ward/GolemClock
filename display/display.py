@@ -30,8 +30,7 @@ class LCDLinearScroll:
 		self.display.clear()
 		self.display.message(self.items[self.index])
 
-
-	def setup_scoll_events(self):
+	def setup_scroll_events(self):
 		"""Sets up the scroll events such that left is cycles backwards
 		and right cycles forwards"""
 
