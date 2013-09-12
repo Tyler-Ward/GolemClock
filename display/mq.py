@@ -1,4 +1,5 @@
 import pika
+from display import LCDLinearScroll
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
 	        host='localhost'))
