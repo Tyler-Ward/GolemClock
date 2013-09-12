@@ -1,4 +1,6 @@
 webface/golem.db
+webface/static/
+
 
 *.py[cod]
 

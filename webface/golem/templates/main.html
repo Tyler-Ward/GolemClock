@@ -1,7 +1,16 @@
 {% extends "core.html" %}
+{% load staticfiles %}
 
 {% block content %}
 <h1>Admin</h1>
 <a href="/logout">Logout</a>
 <p>There will be some options here.</p>
+
+<p>
+	<button type="button" id="btn-test-display">Test the Display</button>
+</p>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
 {% endblock %}
