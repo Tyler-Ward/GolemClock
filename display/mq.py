@@ -11,6 +11,7 @@ print ' [*] Waiting for messages. To exit press CTRL+C'
 
 lcd_scroller =  LCDLinearScroll(())
 def callback(ch, method, properties, body):
+	print("message received: {0}".format(body))
 	lcd_scroller.display_message(body)
 
 
