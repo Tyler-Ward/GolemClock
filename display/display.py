@@ -36,18 +36,12 @@ class LCDLinearScroll:
 
 		buttons = {'left': self.display.LEFT, 'right': self.display.RIGHT}
 
-		prev_button = None
-
 		while True:
 			if self.display.buttonPressed(buttons['left']):
-				if buttons['left'] is not prev_button:
-					self.display_prev()
-					prev_button = buttons['left']
+				self.display_prev()
 
 			if self.display.buttonPressed(buttons['right']):
-				if buttons['right'] is not prev_button:
-					self.display_next()
-					prev_button = buttons['right']
+				self.display_next()
 
 if __name__ == '__main__':
 	items = ('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6')
