@@ -12,6 +12,12 @@ class LCDLinearScroll:
 		self.items = items 	
 		self.index = 0
 
+	def display_message(msg):
+		"Displays an arbitrary message regardless of items"
+		self.display.clear()
+		self.display.message(msg)
+
+
 	def display_next(self):
 		"Displays the next item in the cycle of items"
 		self.index += 1
@@ -28,8 +34,7 @@ class LCDLinearScroll:
 
 	def display_current(self):
 		"Displays the current message"	
-		self.display.clear()
-		self.display.message(self.items[self.index])
+		self.display_message(self.items[self.index])
 
 	def setup_scroll_events(self):
 		"""Sets up the scroll events such that left is cycles backwards
@@ -52,5 +57,6 @@ class LCDLinearScroll:
 if __name__ == '__main__':
 	items = ('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6')
 	scroller = LCDLinearScroll(items)
+	scroller.display_message("hello")
 	scroller.setup_scroll_events()
 
