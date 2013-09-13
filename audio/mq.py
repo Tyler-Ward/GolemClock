@@ -1,6 +1,5 @@
 import pika
 import pickle
-from display import LCDLinearScroll
 from AlarmSound import AlarmSound
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
