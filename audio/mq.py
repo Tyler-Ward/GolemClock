@@ -13,7 +13,10 @@ print ' [*] Waiting for messages. To exit press CTRL+C'
 alarm_sound = AlarmSound(0.5)
 def callback(ch, method, properties, body):
 	print("message received: {0}".format(body))	
-	alarm_sound.play("sound.wav")
+	if body == "ALARM_START":
+		alarm_sound.play("sound.wav")
+	elif body == "ALARM_STOP":
+		alarm_sound.stop()
 	
 
 channel.basic_consume(callback, queue='output', no_ack=True)
