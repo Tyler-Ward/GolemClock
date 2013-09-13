@@ -1,6 +1,7 @@
 import pika
 import pickle
 from display import LCDLinearScroll
+from AlarmSound import AlarmSound
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
 	        host='localhost'))
@@ -10,14 +11,11 @@ channel.queue_declare(queue='screendisplay')
 
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
+alarm_sound = AlarmSound(0.5)
 def callback(ch, method, properties, body):
-	print("message received: {0}".format(body))
-	items = pickle.loads(body)
-	if len(items) != 0:
-		lcd_scroller =  LCDLinearScroll(items)
-		lcd_scroller.display_message("Scroll through\nmessages")
-		lcd_scroller.setup_scroll_events()
-
+	print("message received: {0}".format(body))	
+	alarm_sound.play("sound.wav")
+	
 
 channel.basic_consume(callback, queue='screendisplay', no_ack=True)
 channel.start_consuming()
