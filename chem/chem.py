@@ -94,6 +94,6 @@ while(1):
 		channel.basic_publish(exchange='',
                 routing_key='output',
                 body='ALARM_STOP')
-		alarmactive==0
+		alarmactive=0
 
 	time.sleep(1)	
