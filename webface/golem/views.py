@@ -4,6 +4,7 @@ from django.http import HttpResponseBadRequest, HttpResponseForbidden, HttpRespo
 from django.template import RequestContext
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from golem.models import Alarm
 
 def index_view(request):
 	return render_to_response("index.html")
@@ -30,7 +31,8 @@ def login_view(request):
 
 @login_required
 def main_view(request):
-	return render_to_response("main.html")
+	c = RequestContext(request, {"alarms":Alarm.objects.all()})
+	return render_to_response("main.html", context_instance=c)
 	
 @login_required
 def logout_view(request):
