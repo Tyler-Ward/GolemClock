@@ -49,8 +49,9 @@ channel = connection.channel()
 
 channel.queue_declare(queue='output')
 
+alarmactive=0
 
-while(1)
+while(1):
 #if __name__ == "__main__":
 #	print testalarm
 
@@ -79,17 +80,20 @@ while(1)
 	#print alarmlist
 	for alarmentry in alarmlist:
 		if should_fire_alarm(alarmentry):
-			channel.basic_publish(exchange='',
-			routing_key='output',
-			body='ALARM_START')
+			if alarmactive==0:
+				channel.basic_publish(exchange='',
+				routing_key='output',
+				body='ALARM_START')
+				alarmactive=1
 			alarm_set=1
 			#print "ALARM ALARM ALARM"
 			#from subprocess import call
 			#call(["omxplayer", "~/01\ Visitors\ From\ Dreams.mp3"])
 	
-	if alarm_set == 0:
+	if alarm_set == 0 and alarmactive==1:
 		channel.basic_publish(exchange='',
                 routing_key='output',
                 body='ALARM_STOP')
+		alarmactive==0
 
 	time.sleep(1)	
