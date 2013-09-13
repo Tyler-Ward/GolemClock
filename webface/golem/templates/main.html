@@ -7,11 +7,11 @@
 <p>There will be some options here.</p>
 
 <p>
-	<button type="button" id="btn-test-display">Test the Display</button>
+	<button type="button" class="btn btn-default" id="btn-test-display">Test the Display</button>
 </p>
 
 <h2>Alarms</h2>
-<table>
+<table class="table">
 	<tr>
 		<th>Time</th>
 		<th>M</th>
@@ -23,19 +23,21 @@
 		<th>S</th>
 		<th>Active</th>
 		<th>Suppressed</th>
+		<th></th>
 	</tr>
 	{% for alarm in alarms %}
-	<tr>
-		<td>{{ alarm.time }}</td>
-		<td>{{ alarm.mondays }}</td>
-		<td>{{ alarm.tuesdays }}</td>
-		<td>{{ alarm.wednesdays }}</td>
-		<td>{{ alarm.thursdays }}</td>
-		<td>{{ alarm.fridays }}</td>
-		<td>{{ alarm.saturdays }}</td>
-		<td>{{ alarm.sundays }}</td>
-		<td>{{ alarm.activated }}</td>
-		<td>{{ alarm.suppressed }}</td>
+	<tr id="{{ alarm.id }}">
+		<td class="alarm-time">{{ alarm.time }}</td>
+		<td class="alarm-mondays"><input type="checkbox" {% if alarm.mondays %}checked="checked"{% endif %}/></td>
+		<td class="alarm-tuesdays"><input type="checkbox" {% if alarm.tuesdays %}checked="checked"{% endif %}/></td>
+		<td class="alarm-wednesddays"><input type="checkbox" {% if alarm.wednesdays %}checked="checked"{% endif %}/></td>
+		<td class="alarm-thursdays"><input type="checkbox" {% if alarm.thursdays %}checked="checked"{% endif %}/></td>
+		<td class="alarm-fridays"><input type="checkbox" {% if alarm.fridays %}checked="checked"{% endif %}/></td>
+		<td class="alarm-saturdays"><input type="checkbox" {% if alarm.saturdays %}checked="checked"{% endif %}/></td>
+		<td class="alarm-sundays"><input type="checkbox" {% if alarm.sundays %}checked="checked"{% endif %}/></td>
+		<td class="alarm-activated"><input type="checkbox" {% if alarm.activated %}checked="checked"{% endif %}/></td>
+		<td class="alarm-suppressed"><input type="checkbox" {% if alarm.suppressed %}checked="checked"{% endif %}/></td>
+		<td class="alarm-delete"><a href=""><span class="glyphicon glyphicon-remove"></span></a></td>
 	</tr>
 	{% endfor %}
 </table>
