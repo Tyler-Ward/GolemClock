@@ -8,8 +8,7 @@ class AlarmSound:
 
 	def start_sound(self, url):
 		def callback():
-			print("CUNT")
-			call(["mxplayer", url])
+			call(["omxplayer", url])
 			self.timer = Timer(self.delay, callback)
 			self.timer.start()
 		callback()
