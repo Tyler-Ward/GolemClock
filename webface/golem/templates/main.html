@@ -9,6 +9,36 @@
 <p>
 	<button type="button" id="btn-test-display">Test the Display</button>
 </p>
+
+<h2>Alarms</h2>
+<table>
+	<tr>
+		<th>Time</th>
+		<th>M</th>
+		<th>T</th>
+		<th>W</th>
+		<th>T</th>
+		<th>F</th>
+		<th>S</th>
+		<th>S</th>
+		<th>Active</th>
+		<th>Suppressed</th>
+	</tr>
+	{% for alarm in alarms %}
+	<tr>
+		<td>{{ alarm.time }}</td>
+		<td>{{ alarm.mondays }}</td>
+		<td>{{ alarm.tuesdays }}</td>
+		<td>{{ alarm.wednesdays }}</td>
+		<td>{{ alarm.thursdays }}</td>
+		<td>{{ alarm.fridays }}</td>
+		<td>{{ alarm.saturdays }}</td>
+		<td>{{ alarm.sundays }}</td>
+		<td>{{ alarm.activated }}</td>
+		<td>{{ alarm.suppressed }}</td>
+	</tr>
+	{% endfor %}
+</table>
 {% endblock %}
 
 {% block scripts %}
