@@ -16,5 +16,5 @@ def callback(ch, method, properties, body):
 	alarm_sound.play("sound.wav")
 	
 
-channel.basic_consume(callback, queue='screendisplay', no_ack=True)
+channel.basic_consume(callback, queue='output', no_ack=True)
 channel.start_consuming()

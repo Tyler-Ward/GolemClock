@@ -21,5 +21,5 @@ class AlarmSound:
 		self.timer.cancel()
 
 alarm_sound = AlarmSound(0.5)
-alarm_sound.play("sound.wav")
-alarm_sound.stop()
+#alarm_sound.play("sound.wav")
+#alarm_sound.stop()
