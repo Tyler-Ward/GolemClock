@@ -6,6 +6,23 @@ function bind_controls(){
 	$('#btn-test-display').click(function(){
 		test_display();
 	});
+
+	$('.alarm-mondays, .alarm-tuesdays, .alarm-wednesdays, .alarm-thursdays, .alarm-fridays, .alarm-saturdays, .alarm-sundays, .alarm-activated, .alarm-suppressed').change(function(){
+		console.log("Editing a thing.");
+	});
+
+	$('.alarm-delete').click(function(){
+			console.log("Deleting a thing.");
+			delete_alarm(this);
+	});
+}
+
+function delete_alarm(alarm){
+	
+}
+
+function update_checkbox_value(alarm){
+	
 }
 
 function test_display(){
