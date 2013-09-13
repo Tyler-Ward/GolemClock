@@ -2,6 +2,7 @@
 
 import time
 import sqlite3
+import pika
 
 testalarm = {
 "id" : 1,
@@ -42,9 +43,15 @@ def should_fire_alarm(alarm):
 	else:
 		return False
 	
+connection = pika.BlockingConnection(pika.ConnectionParameters(
+        host='localhost'))
+channel = connection.channel()
+
+channel.queue_declare(queue='output')
 
 
-if __name__ == "__main__":
+while(1)
+#if __name__ == "__main__":
 #	print testalarm
 
 	conn = sqlite3.connect('../webface/golem.db')
@@ -66,11 +73,23 @@ if __name__ == "__main__":
 		"sundays" : (row[8]==1),
 		"activated" : (row[9]==1),
 		"suppressed" : (row[10]==1)})
-	
+
+	alarm_set=0	
+
 	#print alarmlist
 	for alarmentry in alarmlist:
 		if should_fire_alarm(alarmentry):
-			print "ALARM ALARM ALARM"
-			from subprocess import call
-			call(["omxplayer", "~/01\ Visitors\ From\ Dreams.mp3"])
-		
+			channel.basic_publish(exchange='',
+			routing_key='output',
+			body='ALARM_START')
+			alarm_set=1
+			#print "ALARM ALARM ALARM"
+			#from subprocess import call
+			#call(["omxplayer", "~/01\ Visitors\ From\ Dreams.mp3"])
+	
+	if alarm_set == 0:
+		channel.basic_publish(exchange='',
+                routing_key='output',
+                body='ALARM_STOP')
+
+	time.sleep(1)	

@@ -3,7 +3,7 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ROOT = '/home/darren/devel/golem/webface/'
+ROOT = '/home/tyler/GolemClock/webface/'
 LOGIN_URL = "/login"
 
 ADMINS = (
