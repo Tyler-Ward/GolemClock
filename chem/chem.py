@@ -1,99 +1,59 @@
 #!/usr/bin/python
 
-import time
-import sqlite3
+import alarmlogic
 import pika
+import threading
+import time
 
-testalarm = {
-"id" : 1,
-"time" : time.time(),
-"mondays" : True,
-"tuesdays" : True,
-"wednesdays" : True,
-"thursdays" : True,
-"fridays" : True,
-"saturdays" : True,
-"sundays" : True,
-"activated" : True,
-"suppressed" : False
-}
+alarmlist=[]
+running =True
 
-dayname = (time.strftime('%A')+"s").lower()
+# performs time based actions
+def timethread():
 
-def clearsuppressed(alarmid):
-	print "clear surppressed flag on ", alarmid
+        alarmactive=0
+	while running:
+		alarm_set = alarmlogic.evaluatealarms(alarmlist)
 
-def check_fire_time(alarmtime):
-	alarmtime = alarmtime % 86400
-	timenow = time.time() % 86400
-	#print alarmtime,timenow
-	if alarmtime < timenow+30 and alarmtime > timenow-30:
-		return True
-	else:
-		return False
-
-def should_fire_alarm(alarm):
-	#check if alarm is activated
-	if (alarm['activated'] == True) and (alarm[dayname] == True) and check_fire_time(alarm['time']):
-		if alarm['suppressed'] == True:
-			clearsuppressed(alarm[id])
-			return False
-		else:
-			return True
-	else:
-		return False
+		if alarm_set == 1 and alarmactive==0:
+			channel.basic_publish(exchange='clock_output',
+	                routing_key='',
+	                body='ALARM_START')
+		        alarmactive=1
+ 		elif alarm_set == 0 and alarmactive==1:
+ 			channel.basic_publish(exchange='clock_output',
+        	        routing_key='',
+        	        body='ALARM_STOP')
+        	        alarmactive=0
 	
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-        host='localhost'))
-channel = connection.channel()
+		time.sleep(1)
 
-channel.queue_declare(queue='output')
 
-alarmactive=0
 
-while(1):
-#if __name__ == "__main__":
-#	print testalarm
 
-	conn = sqlite3.connect('../webface/golem.db')
-	c = conn.cursor()
-	alarmlist=[]
-	
-	for row in c.execute('SELECT * FROM golem_alarm'):
-		#print row
-		#print type(row[2]==1)
-		timevalue = time.mktime(time.strptime(row[1],"%Y-%m-%d %H:%M:%S"))
-		alarmlist.append({'id':row[0],
-		'time':timevalue,
-		"mondays" : (row[2]==1),
-		"tuesdays" : (row[3]==1),
-		"wednesdays" : (row[4]==1),
-		"thursdays" : (row[5]==1),
-		"fridays" : (row[6]==1),
-		"saturdays" : (row[7]==1),
-		"sundays" : (row[8]==1),
-		"activated" : (row[9]==1),
-		"suppressed" : (row[10]==1)})
+if __name__ == "__main__":
 
-	alarm_set=0	
+        connection = pika.BlockingConnection(pika.ConnectionParameters(
+                host='localhost'))
+        channel = connection.channel()
 
-	#print alarmlist
-	for alarmentry in alarmlist:
-		if should_fire_alarm(alarmentry):
-			if alarmactive==0:
-				channel.basic_publish(exchange='',
-				routing_key='output',
-				body='ALARM_START')
-				alarmactive=1
-			alarm_set=1
-			#print "ALARM ALARM ALARM"
-			#from subprocess import call
-			#call(["omxplayer", "~/01\ Visitors\ From\ Dreams.mp3"])
-	
-	if alarm_set == 0 and alarmactive==1:
-		channel.basic_publish(exchange='',
-                routing_key='output',
-                body='ALARM_STOP')
-		alarmactive=0
+#        channel.queue_declare(queue='output')
 
-	time.sleep(1)	
+	# input channels
+	channel.queue_declare(queue='input')
+
+	# output channels
+	channel.exchange_declare(exchange='clock_output',type='fanout')
+
+        alarmlist = alarmlogic.getalarms()
+
+	t1 = threading.Thread(target=timethread)
+	t1.start()
+
+	try:
+        	while(1):
+			time.sleep(1)
+			pass
+	except KeyboardInterrupt:
+		running=False
+

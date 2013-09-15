@@ -6,7 +6,16 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
 	        host='localhost'))
 channel = connection.channel()
 
-channel.queue_declare(queue='output')
+#channel.queue_declare(queue='output')
+
+channel.exchange_declare(exchange='clock_output',
+                         type='fanout')
+
+result = channel.queue_declare(exclusive=True)
+queue_name = result.method.queue
+
+channel.queue_bind(exchange='clock_output',
+                   queue=queue_name)
 
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
@@ -19,5 +28,5 @@ def callback(ch, method, properties, body):
 		alarm_sound.stop()
 	
 
-channel.basic_consume(callback, queue='output', no_ack=True)
+channel.basic_consume(callback, queue=queue_name, no_ack=True)
 channel.start_consuming()

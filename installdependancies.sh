@@ -1,6 +1,6 @@
 
 # package dependancies
-apt-get install rabbitmq-server python-setuptools python-django
+apt-get install rabbitmq-server python-setuptools python-django mplayer
 
 # python dependancies
 easy_install pip
