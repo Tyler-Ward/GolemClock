@@ -8,34 +8,62 @@ import time
 alarmlist=[]
 running =True
 
+alarmstatus="OFF"
+#alarm modes
+# OFF alarm is off
+# ON alarm is on
+# CANCLED alarm has been cancled
+#
+#
+#
+#
+
+snoozeactive=False
+# SNOOZE alarm is in snooze mode
+snoozetime=alarmlogic.snoozealarm
+
 # performs time based actions
 def timethread():
 
-        alarmactive=0
 	while running:
 		alarm_set = alarmlogic.evaluatealarms(alarmlist)
 
-		if alarm_set == 1 and alarmactive==0:
+		if alarm_set == 1 and alarmstatus=="OFF":
 			channel.basic_publish(exchange='clock_output',
 	                routing_key='',
 	                body='ALARM_START')
-		        alarmactive=1
- 		elif alarm_set == 0 and alarmactive==1:
+		        alarmastatus="ON"
+ 		elif alarm_set == 0 and alarmastatus=="ON":
  			channel.basic_publish(exchange='clock_output',
         	        routing_key='',
         	        body='ALARM_STOP')
-        	        alarmactive=0
+        	        alarmstatus="OFF"
+		elif alarm_set ==0 and alarmstatus=="CANCLED":
+			alarmstatus="OFF"
+			snoozetime=False
 	
 		time.sleep(1)
+        	alarmlist = alarmlogic.getalarms()
+		if snoozeactive:
+			alarmlist.append(snoozetime)
 
 
 def processcommand(ch, method, properties, body):
 	print " [x] Received %r" % (body,)
 
-	if body == "ALARM_CANCEL":
+	if body == "ALARM_CANCEL" or body == "alarm_cancel":
 		channel.basic_publish(exchange='clock_output',
 			routing_key='',
 			body='ALARM_STOP')
+		alarmstatus="CANCLED"
+	elif body == "ALARM_SNOOZE" or body == "alarm_snooze":
+		channel.basic_publish(exchange='clock_output',
+			routing_key='',
+			body='ALARM_STOP')
+		alarmstatus="CANCLED"
+		snoozeactive=True
+		#add alarm event for snooze
+		snoozetime.time=time.time()+(60*3)
 	else:
 		print "unrecognised command"	
 
