@@ -22,14 +22,10 @@ def select_callback():
 def callback(ch, method, properties, body):
 	print("message received: {0}".format(body))
 	if body == "ALARM_START":
-		items = ()#pickle.loads(body)
-		print(1)
+		items = ("It's sunny today", "Meeting at 2pm")
 		lcd_scroller =  LCDLinearScroll(items, select_callback=select_callback)
-		print(2)
 		lcd_scroller.display_message("Scroll through\nmessages")
-		print(3)
-		lcd_scroller.setup_scroll_events()
-		print(4)
+		#lcd_scroller.setup_scroll_events()
 
 channel.basic_consume(callback, queue=queue_name, no_ack=True)
 channel.start_consuming()
