@@ -27,6 +27,5 @@ def callback(ch, method, properties, body):
 		lcd_scroller.display_message("Scroll through\nmessages")
 		lcd_scroller.setup_scroll_events()
 
-
-channel.basic_consume(callback, queue='screendisplay', no_ack=True)
+channel.basic_consume(callback, queue=queue_name, no_ack=True)
 channel.start_consuming()
