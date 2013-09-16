@@ -36,7 +36,7 @@ def stop_alarm_view(request):
 	channel = connection.channel()
 	
 	channel.basic_publish(exchange = '',
-												routing_key='command',
+												routing_key='commands',
 												body='alarm_cancel')
 												
 	connection.close()
@@ -49,7 +49,7 @@ def snooze_alarm_view(request):
 	channel = connection.channel()
 	
 	channel.basic_publish(exchange = '',
-												routing_key='command',
+												routing_key='commands',
 												body='alarm_snooze')
 												
 	connection.close()
