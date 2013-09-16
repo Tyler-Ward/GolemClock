@@ -29,7 +29,7 @@ def add_module_db():
 def read_module_db():
 	with connection:
 		cursor = connection.cursor()
-		cursor.execute("SELECT * FROM golum_module;")
+		cursor.execute("SELECT * FROM golem_module;")
 		return cursor.fetchall()
 
 print(read_module_db())
