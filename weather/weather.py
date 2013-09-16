@@ -23,7 +23,7 @@ connection = sqlite3.connect("/home/pi/GolemClock/webface/golem.db")
 def add_module_db():
 	with connection:
 		cursor = connection.cursor()
-		cursor.execute("INSERT INTO golem_module (module_name, enabled) ('weather', 1);")
+		cursor.execute("INSERT INTO golem_module (module_name, enabled) VALUES ('weather', 1);")
 		print(cursor.fetchall())
 
 
