@@ -29,6 +29,33 @@ def login_view(request):
 		else:
 			return HttpResponseForbidden("Incorrect username or password")
 
+def stop_alarm_view(request):
+	import pika as p
+	
+	connection = p.BlockingConnection(p.ConnectionParameters("localhost"))
+	channel = connection.channel()
+	
+	channel.basic_publish(exchange = '',
+												routing_key='command',
+												body='alarm_cancel')
+												
+	connection.close()
+	return HttpResponse("Alarm stopped")
+	
+def snooze_alarm_view(request):
+	import pika as p
+	
+	connection = p.BlockingConnection(p.ConnectionParameters("localhost"))
+	channel = connection.channel()
+	
+	channel.basic_publish(exchange = '',
+												routing_key='command',
+												body='alarm_snooze')
+												
+	connection.close()
+	return HttpResponse("Alarm snoozed")
+	
+
 @login_required
 def main_view(request):
 	c = RequestContext(request, {"alarms":Alarm.objects.all()})
