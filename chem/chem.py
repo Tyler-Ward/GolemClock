@@ -29,6 +29,17 @@ def timethread():
 		time.sleep(1)
 
 
+def processcommand(ch, method, properties, body):
+	print " [x] Received %r" % (body,)
+
+	if body == "ALARM_CANCEL"
+		channel.basic_publish(exchange='clock_output',
+			routing_key='',
+			body='ALARM_STOP')
+	else:
+		print "unrecognised command"	
+
+
 
 
 if __name__ == "__main__":
@@ -51,9 +62,11 @@ if __name__ == "__main__":
 	t1.start()
 
 	try:
-        	while(1):
-			time.sleep(1)
-			pass
+		channel.basic_consume(processcommand,
+                      queue='commands',
+                      no_ack=True)
+		channel.start_consuming()
+
 	except KeyboardInterrupt:
 		running=False
 
