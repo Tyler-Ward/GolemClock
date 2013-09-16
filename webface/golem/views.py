@@ -58,7 +58,9 @@ def snooze_alarm_view(request):
 
 @login_required
 def main_view(request):
-	c = RequestContext(request, {"alarms":Alarm.objects.filter(manual=True)})
+	context_dict = {"recurring":Alarm.objects.filter(manual=True,time__year=1970),
+									"one_off":Alarm.objects.filter(manual=True).exclude(time__year=1970)}
+	c = RequestContext(request, context_dict)
 	return render_to_response("main.html", context_instance=c)
 	
 @login_required
