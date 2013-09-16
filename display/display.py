@@ -8,10 +8,11 @@ class LCDLinearScroll:
 	The list of items can be scrolled through
 	"""
 
-	def __init__(self, items, display=Adafruit_CharLCDPlate()):
+	def __init__(self, items, display=Adafruit_CharLCDPlate(), select_callback=None):
+		self.select_callback = select_callback
 		self.display = display
 		self.items = items 	
-		self.index = 0
+		self.index = -1
 		self.colours = {'Red' : self.display.RED , 
 			'Yellow': self.display.YELLOW,
 			'Green' : self.display.GREEN,
@@ -36,7 +37,7 @@ class LCDLinearScroll:
 	def display_prev(self):
 		"Displays the previous item in the cycle of items"
 		self.index -= 1
-		if self.index == -1:
+		if self.index <= -1:
 			self.index = len(self.items) - 1
 		self.display_current()
 
@@ -64,7 +65,7 @@ class LCDLinearScroll:
 		"""Sets up the scroll events such that left is cycles backwards
 		and right cycles forwards"""
 
-		buttons = {'left': self.display.LEFT, 'right': self.display.RIGHT}
+		buttons = {'select': self.display.LCD, 'left': self.display.LEFT, 'right': self.display.RIGHT}
 
 		
 		while True:
@@ -76,7 +77,12 @@ class LCDLinearScroll:
 			if self.display.buttonPressed(buttons['right']):
 				while self.display.buttonPressed(buttons['right']):
 					pass
-				self.display_next()
+				
+			if self.display.buttonPressed(buttons['select']):
+				while self.display.buttonPressed(buttons['select']):
+					pass
+				self.select_callback()
+	
 
 if __name__ == '__main__':
 	items = ('Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6')
