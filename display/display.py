@@ -43,7 +43,8 @@ class LCDLinearScroll:
 
 	def display_current(self):
 		"Displays the current message"	
-		self.display_message(self.items[self.index])
+		if len(items) > 0:
+			self.display_message(self.items[self.index])
 
 	def change_colour(self, colour):
 		self.display.backlight(self.colours[colour])

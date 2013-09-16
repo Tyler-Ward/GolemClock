@@ -21,8 +21,8 @@ def select_callback():
 
 def callback(ch, method, properties, body):
 	print("message received: {0}".format(body))
-	items = pickle.loads(body)
-	if len(items) != 0:
+	if body == "ALARM_START":
+		items = ()#pickle.loads(body)
 		lcd_scroller =  LCDLinearScroll(items, select_callback=select_callback)
 		lcd_scroller.display_message("Scroll through\nmessages")
 		lcd_scroller.setup_scroll_events()
