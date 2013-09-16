@@ -18,7 +18,7 @@ def weather_message(city, country):
 		msgs.append("Chance of snow")	
 	return {'type': 'weather', 'messages': msgs, 'possible_delays': True}
 
-connection = sqlite3.connect("~/GolemClock/webface/golem.db")
+connection = sqlite3.connect("/home/pi/GolemClock/webface/golem.db")
 
 def add_module_db():
 	with connection:
