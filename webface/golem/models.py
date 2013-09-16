@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 
 class Alarm(models.Model):
+	name = models.CharField(max_length=250)
 	time = models.DateTimeField()
 	mondays = models.BooleanField(blank=True)
 	tuesdays = models.BooleanField(blank=True)
@@ -14,7 +15,7 @@ class Alarm(models.Model):
 	
 	activated = models.BooleanField(default=True)
 	suppressed = models.BooleanField(default=False)
-	manual = models.BooleanField(default=True)
+	manual = models.BooleanField(default=False)
 
 class Module(models.Model):
 	module_name = models.CharField(max_length=50)
