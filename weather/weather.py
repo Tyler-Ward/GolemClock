@@ -1,4 +1,4 @@
-import urllib2Go
+import urllib2
 import json
 import sqlite3
 
