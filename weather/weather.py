@@ -23,7 +23,7 @@ connection = sqlite3.connect("/home/pi/GolemClock/webface/golem.db")
 def add_module_db():
 	with connection:
 		cursor = connection.cursor()
-		cursor.execute("SHOW TABLES")
+		cursor.execute("SELECT * FROM dbname.sqlite_master WHERE type='table';")
 		print(cursor.fetchall())
 
 
