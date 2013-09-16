@@ -32,10 +32,16 @@ def read_module_db():
 		cursor.execute("SELECT * FROM golem_module;")
 		return cursor.fetchall()
 
-def read_offsets_db():
+def read_offset_db():
 	with connection:
 		cursor = connection.cursor()
 		cursor.execute("SELECT * FROM golem_offset;")
 		return cursor.fetchall()
 
-print(read_offsets_db)
+def read_alarm_db():
+	with connection:
+		cursor = connection.cursor()
+		cursor.execute("SELECT * FROM golem_offset;")
+		return cursor.fetchall()
+
+print(read_alarm_db())
