@@ -82,7 +82,8 @@ class LCDLinearScroll:
 			if self.display.buttonPressed(buttons['select']):
 				while self.display.buttonPressed(buttons['select']):
 					pass
-				self.select_callback()
+				if self.select_callback is not None:
+					self.select_callback()
 	
 
 if __name__ == '__main__':
