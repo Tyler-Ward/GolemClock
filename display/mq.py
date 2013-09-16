@@ -6,12 +6,15 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(
 	        host='localhost'))
 channel = connection.channel()
 
-channel.queue_declare(queue='screendisplay')
-channel.queue_declare(queue='output')
+channel.exchange_declare(exchange='clock_output', type='fanout')
+result = channel.queue_declare(exclusive=True)
+queue_name = result.method.queue
+channel.queue_bind(exchange='clock_output', queue=queue_name)
 
 print ' [*] Waiting for messages. To exit press CTRL+C'
 
 def select_callback():
+	print("select message sent")	
 	channel.basic_publish(exchange='clock_output', routing_key='', body='ALARM_STOP')
 	channel.basic_publish(exchange='clock_output', routing_key='', body='ALARM_CANCEL')
 
