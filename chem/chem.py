@@ -32,7 +32,7 @@ def timethread():
 def processcommand(ch, method, properties, body):
 	print " [x] Received %r" % (body,)
 
-	if body == "ALARM_CANCEL"
+	if body == "ALARM_CANCEL":
 		channel.basic_publish(exchange='clock_output',
 			routing_key='',
 			body='ALARM_STOP')
@@ -51,7 +51,7 @@ if __name__ == "__main__":
 #        channel.queue_declare(queue='output')
 
 	# input channels
-	channel.queue_declare(queue='input')
+	channel.queue_declare(queue='commands')
 
 	# output channels
 	channel.exchange_declare(exchange='clock_output',type='fanout')

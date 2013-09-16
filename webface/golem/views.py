@@ -58,7 +58,7 @@ def snooze_alarm_view(request):
 
 @login_required
 def main_view(request):
-	c = RequestContext(request, {"alarms":Alarm.objects.all()})
+	c = RequestContext(request, {"alarms":Alarm.objects.filter(manual=True)})
 	return render_to_response("main.html", context_instance=c)
 	
 @login_required
