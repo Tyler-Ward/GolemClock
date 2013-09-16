@@ -3,7 +3,7 @@
 import time
 import sqlite3
 
-testalarm = {
+snoozealarm = {
 "id" : 1,
 "time" : time.time(),
 "mondays" : True,
