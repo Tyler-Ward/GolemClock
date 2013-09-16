@@ -1,6 +1,22 @@
 {% extends "core.html" %}
+{% load staticfiles %}
+
+{% block styles %}
+<style type="text/css">
+.btn-control{
+  height: 100px;
+}
+</style>
+{% endblock %}
 
 {% block content %}
-<h1>Index</h1>
-<p>Welcome to the GolemClock. You need to <a href="/login">login</a> to perform any actions.</p>
+<h1>GolemClock</h1>
+<p>Welcome to the GolemClock. You need to <a href="/login">login</a> to setup the alarms.</p>
+<button id="btn-snooze" class="btn btn-success btn-block btn-control">Snooze</button>
+<p></p>
+<button id="btn-stop" class="btn btn-danger btn-block btn-control">Turn off alarms</button>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
 {% endblock %}
