@@ -3,14 +3,29 @@
 
 {% block content %}
 <h1>Admin</h1>
-<a href="/logout">Logout</a>
-<p>There will be some options here.</p>
-
-<p>
-	<button type="button" class="btn btn-default" id="btn-test-display">Test the Display</button>
-</p>
+<button type="button" class="btn btn-default btn-block btn-primary" id="btn-test-display">Create a new alarm...</button>
+<a class="btn btn-danger btn-block" href="/logout">Logout</a>
 
 <h2>Alarms</h2>
+<h3>One off</h3>
+<table class="table">
+	<tr>
+		<th>Name</th>
+		<th>Time</th>
+		<th>Active</th>
+		<th></th>
+	</tr>
+	{% for alarm in one_off %}
+	<tr id="{{ alarm.id }}">
+		<td class="alarm-name">{{ alarm.name }}</td>
+		<td class="alarm-time">{{ alarm.time }}</td>
+		<td class="alarm-activated"><input type="checkbox" {% if alarm.activated %}checked="checked"{% endif %}/></td>
+		<td class="alarm-delete"><span class="glyphicon glyphicon-remove text-danger"></span></td>
+	</tr>
+	{% endfor %}
+</table>
+
+<h3>Recurring</h3>
 <table class="table">
 	<tr>
 		<th>Name</th>
@@ -25,7 +40,7 @@
 		<th>Active</th>
 		<th></th>
 	</tr>
-	{% for alarm in alarms %}
+	{% for alarm in recurring %}
 	<tr id="{{ alarm.id }}">
 		<td class="alarm-name">{{ alarm.name }}</td>
 		<td class="alarm-time">{{ alarm.time.time }}</td>
